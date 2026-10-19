@@ -1,16 +1,41 @@
-# React + Vite
+# YouTube SPA
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Одностраничное приложение для поиска видео на YouTube с сохранением поисковых запросов в избранное. Финальный проект курса по React.
 
-Currently, two official plugins are available:
+## Возможности
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Авторизация** по логину и паролю (todo-redev API). Токен хранится в `localStorage`, без него доступна только страница входа.
+- **Поиск видео** через YouTube Data API. Результаты можно смотреть плиткой или списком.
+- **Сохранение запроса** в избранное: название, сортировка и количество результатов (0–50).
+- **Избранное**: выполнить, отредактировать или удалить сохранённый запрос. «Выполнить» возвращает на главную и сразу ищет с сохранёнными параметрами.
+- **Избранное своё у каждого пользователя** — после повторного входа видны только свои запросы (ключ в `localStorage` строится по id пользователя из JWT).
+- **Тёмная тема** включается автоматически по настройке системы.
 
-## React Compiler
+## Стек
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- React 19, Vite
+- React Router
+- Ant Design 6 + @ant-design/icons
+- React Hook Form
+- Fetch API
 
-## Expanding the Oxlint configuration
+## Запуск
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+```bash
+npm install
+npm run dev
+```
+
+`VITE_USE_MOCKS=true` — результаты поиска берутся из `src/mocks/searchResponse.json`, квота YouTube API не расходуется.
+
+## Структура
+
+```
+src/
+├── api/         запрос к YouTube API
+├── auth/        форма и запрос авторизации
+├── components/  шапка, поиск, список видео, модальное окно
+├── pages/       страницы: вход, поиск, избранное
+├── utils/       работа с избранным, id пользователя, декодирование HTML
+└── mocks/       тестовый ответ YouTube API
+```
